@@ -10,15 +10,12 @@ export const metadata: Metadata = {
   description: "Admin Panel Spinach Monitoring",
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   return (
-    <Main params={{ className: plusJakartaSans.className }}>
-      {children}
-    </Main>
+    <Main params={{ className: plusJakartaSans.className }}>{children}</Main>
   );
 }

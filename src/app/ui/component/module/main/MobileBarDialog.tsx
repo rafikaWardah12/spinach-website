@@ -64,7 +64,8 @@ const MobileBarDialog = ({
                       <li key={item.name}>
                         <a
                           href={item.href}
-                          className={classNames(
+                          className={
+                            classNames(
                             pathName.includes(item.href.toLocaleLowerCase())
                               ? "bg-gray-50 text-primary1 border-l-primary1 border-l-4"
                               : "text-gray-700 hover:bg-gray-50 hover:text-primary1",

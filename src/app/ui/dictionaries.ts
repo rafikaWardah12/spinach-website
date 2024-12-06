@@ -12,7 +12,7 @@ const dictionaries = {
   id,
 };
 
-export const getDictionary = async (locale: Locale) => {
+export const getDictionary = (locale: Locale) => {
   if (locale in dictionaries) {
     return dictionaries[locale];
   }
