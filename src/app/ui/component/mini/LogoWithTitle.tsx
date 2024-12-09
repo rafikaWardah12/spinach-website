@@ -10,7 +10,7 @@ const LogoWithTitle = ({ }: LoginFormProps) => {
   return (
     <div className="flex h-20 shrink-0 items-center space-x-4">
       <Image src={Images.ic} alt={" Dashboard "} width={80} height={80} />
-      <p className="font-bold">{" Dashboard "}</p>
+      <p className="font-bold">{" Monitoring Bayam "}</p>
     </div>
   );
 };

@@ -60,6 +60,7 @@ const MainTemplate = ({ children }: MainTemplateProps) => {
 
       {/* Static sidebar for desktop */}
       <SideBar navigationAdmin={teams} navigations={navigation} t={" "} />
+      {/* <SideBar /> */}
 
       <div className="lg:pl-72 bg-gray-50 h-screen">
         <Header navigations={userNavigation} onClose={setSidebarOpen} t={" "} />
