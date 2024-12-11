@@ -2,12 +2,8 @@
 
 import React, { useState } from "react";
 import {
-  CalendarDaysIcon,
   HomeIcon,
-  BanknotesIcon,
   ChatBubbleLeftRightIcon,
-  NewspaperIcon,
-  UserIcon,
 } from "@heroicons/react/24/outline";
 import { getInitials } from "@/utils";
 import Header from "./Header";
@@ -15,7 +11,6 @@ import MobileBarDialog from "./MobileBarDialog";
 import SideBar from "./Sidebar";
 
 interface MainTemplateProps {
-  t: any;
   children: React.ReactNode;
 }
 
@@ -24,13 +19,13 @@ const MainTemplate = ({ children }: MainTemplateProps) => {
 
   const navigation = [
     {
-      name: "dashboard",
+      name: "Dashboard",
       href: `/dashboard`,
       icon: HomeIcon,
       current: true,
     },
     {
-      name: "monitoring",
+      name: "Monitoring",
       href: `/monitoring`,
       icon: ChatBubbleLeftRightIcon,
       current: false,
@@ -39,17 +34,16 @@ const MainTemplate = ({ children }: MainTemplateProps) => {
   const teams = [
     {
       id: 1,
-      name: "manager",
+      name: "Manager",
       href: `/manager`,
       initial: getInitials("mg"),
       current: false,
     },
-
   ];
   const userNavigation = [{ name: "Keluar", href: "#" }];
 
   return (
-    <div>
+    <div className="h-screen flex">
       {/* Mobile mode */}
       <MobileBarDialog
         navigationAdmin={teams}
@@ -60,9 +54,9 @@ const MainTemplate = ({ children }: MainTemplateProps) => {
 
       {/* Static sidebar for desktop */}
       <SideBar navigationAdmin={teams} navigations={navigation} t={" "} />
-      {/* <SideBar /> */}
 
-      <div className="lg:pl-72 bg-gray-50 h-screen">
+      {/* Main content area */}
+      <div className="flex-1 flex flex-col bg-gray-50 lg:pl-72">
         <Header navigations={userNavigation} onClose={setSidebarOpen} t={" "} />
 
         <main className="py-10">
