@@ -1,3 +1,4 @@
+"use-client";
 import Link from "next/link";
 import { getDictionary, Locale } from "../ui/dictionaries";
 import SideBar from "../ui/component/module/main/Sidebar";

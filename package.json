@@ -12,6 +12,7 @@
     "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.2.0",
     "@prisma/client": "^6.0.1",
+    "@tanstack/react-table": "^8.20.5",
     "init": "^0.1.2",
     "next": "13.5.7",
     "next-images": "^1.8.5",
