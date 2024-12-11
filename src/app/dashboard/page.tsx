@@ -1,14 +1,8 @@
 "use-client";
-import Link from "next/link";
-import { getDictionary, Locale } from "../ui/dictionaries";
-import SideBar from "../ui/component/module/main/Sidebar";
+import MainTemplate from "../ui/component/module/main/MainTemplate";
 import CeremonyCard from "../ui/component/card/CeremonyCard";
 import Images from "@/constant/images";
 import NotesCard from "../ui/component/card/NotesCard";
-// import TransactionChart from "@/components/chart/TransactionChart";
-
-// const data = [{}, {}, {}, {}, {}];
-// const data = [{}, {}, {}, {}, {}];
 
 const data = [
   {
@@ -24,13 +18,6 @@ const data = [
     label: "23 C",
     status: "Normal",
     bgIcon: Images.icBgTemperatur,
-  },
-  {
-    icon: Images.icIntensitasCahaya,
-    title: "Intensitas Cahaya",
-    label: "20 w",
-    status: "Normal",
-    bgIcon: Images.icBgIntensitasCahaya,
   },
   {
     icon: Images.icKelembapan,
@@ -53,19 +40,17 @@ const notesData = [
     notes: `
   1. Bayam harus disiram setiap hari (kelembapan tanah < 50%)
   2. Pemantauan Suhu dan Kelembapan Udara (suhu 18–24°C dengan kelembapan udara antara 60–80%)
-  3. Penerangan (cahaya matahari langsung sekitar 6 jam sehari)
-  4. Pemupukan Otomatis (bayam idealnya tumbuh di tanah dengan pH 6-7)
+  3. Pemupukan Otomatis (bayam idealnya tumbuh di tanah dengan pH 6-7)
       `,
   },
 ];
 
-export default function Dashboard({}: {}) {
+export default function Dashboard() {
   return (
-    <div>
-      {/* <SideBar navigationAdmin={[]} navigations={[]} t={" "} /> */}
+    <MainTemplate>
       <div>
         <h1 className="font-bold text-xl">
-          Selamat Datang di Sisten Monitoring Bayam
+          Selamat Datang di Sistem Monitoring Bayam
         </h1>
         <p className="text-gray-500">Lihat statistik bayam disini</p>
       </div>
@@ -85,6 +70,6 @@ export default function Dashboard({}: {}) {
       <div>
         <NotesCard notes={notesData[0].notes}></NotesCard>
       </div>
-    </div>
+    </MainTemplate>
   );
 }

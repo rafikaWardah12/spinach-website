@@ -7,7 +7,7 @@ const NotesCard: React.FC<NotesCardProps> = ({ notes }) => {
   const notesLines = notes.split("\n").filter((line) => line.trim() !== ""); // Hapus baris kosong
 
   return (
-    <div className="bg-white rounded-xl mx-auto my-4 hover:cursor-pointer flex-shrink-0 shadow-md w-1/4 p-6">
+    <div className="bg-white rounded-xl mx-auto my-4 hover:cursor-pointer flex-shrink-0 shadow-md w-3/4 lg:w-2/3 xl:w-1/2 p-6"> {/* Ubah lebar di sini */}
       <h2 className="font-semibold text-2xl text-gray-700 my-4">Notes</h2>
       <div className="flex flex-col">
         {" "}

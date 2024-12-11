@@ -1,8 +1,8 @@
 "use client";
 
-import PrimaryTable from "../ui/component/table/PrimaryTable";
 import { useState, useEffect } from "react";
 import { useReactTable, getCoreRowModel } from "@tanstack/react-table";
+import MainTemplate from "../ui/component/module/main/MainTemplate";  // Import MainTemplate
 
 const data = [
   {
@@ -92,59 +92,55 @@ const Monitoring = () => {
     setIsClient(true); // Ensures hydration only after the client is ready
   }, []);
 
-  // Render placeholder during hydration
-  //  if (!isClient) {
-  //    return <div>Loading...</div>;
-  //  }
-
   return (
-    <div className="p-4">
-      <h1 className="text-xl font-bold">Data Monitoring</h1>
-      <p className="text-gray-500">Here is a list of all employees</p>
-      <div className="mt-4 overflow-x-auto">
-        <table className="table-auto w-full border-collapse border border-gray-300">
-          <thead className="bg-gray-100">
-            {table.getHeaderGroups().map((headerGroup) => (
-              <tr key={headerGroup.id}>
-                <th className="border border-gray-300 px-4 py-2">
-                  <input type="checkbox" />
-                </th>
-                {headerGroup.headers.map((header) => (
-                  <th
-                    key={header.id}
-                    className="border border-gray-300 px-4 py-2 text-left text-gray-700"
-                  >
-                    {/* {header.isPlaceholder ? null : header.column.columnDef.header?} */}
-                    {header.isPlaceholder
-                      ? null
-                      : typeof header.column.columnDef.header === "string"
-                      ? header.column.columnDef.header
-                      : null}{" "}
+    <MainTemplate>  {/* Wrap the content with MainTemplate for sidebar */}
+      <div className="p-4">
+        <h1 className="text-xl font-bold">Data Monitoring</h1>
+        <p className="text-gray-500">Here is a list of all data entries</p>
+        <div className="mt-4 overflow-x-auto">
+          <table className="table-auto w-full border-collapse border border-gray-300">
+            <thead className="bg-gray-100">
+              {table.getHeaderGroups().map((headerGroup) => (
+                <tr key={headerGroup.id}>
+                  <th className="border border-gray-300 px-4 py-2">
+                    <input type="checkbox" />
                   </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody>
-            {table.getRowModel().rows.map((row) => (
-              <tr key={row.id}>
-                <td className="border border-gray-300 px-4 py-2">
-                  <input type="checkbox" />
-                </td>
-                {row.getVisibleCells().map((cell) => (
-                  <td
-                    key={cell.id}
-                    className="border border-gray-300 px-4 py-2"
-                  >
-                    {cell.getValue() as string}
+                  {headerGroup.headers.map((header) => (
+                    <th
+                      key={header.id}
+                      className="border border-gray-300 px-4 py-2 text-left text-gray-700"
+                    >
+                      {header.isPlaceholder
+                        ? null
+                        : typeof header.column.columnDef.header === "string"
+                        ? header.column.columnDef.header
+                        : null}
+                    </th>
+                  ))}
+                </tr>
+              ))}
+            </thead>
+            <tbody>
+              {table.getRowModel().rows.map((row) => (
+                <tr key={row.id}>
+                  <td className="border border-gray-300 px-4 py-2">
+                    <input type="checkbox" />
                   </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                  {row.getVisibleCells().map((cell) => (
+                    <td
+                      key={cell.id}
+                      className="border border-gray-300 px-4 py-2"
+                    >
+                      {cell.getValue() as string}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
+    </MainTemplate>
   );
 };
 
