@@ -11,19 +11,11 @@ model Data {
   id    Int     @id @default(autoincrement())
   suhu  String
   kelembapan  String
-  timeStamp DateTime
+  timeStamp DateTime @default(now())
   cahaya  String
-  phTanah String 
-  // posts Post[]
+  phTanah String
+  published Boolean @default(false)
+  @@map("data")
+
 }
-
-// model Post {
-//   id        Int     @id @default(autoincrement())
-//   title     String
-//   content   String?
-//   published Boolean @default(false)
-//   author    User    @relation(fields: [authorId], references: [id])
-//   authorId  Int
-// }
-
 

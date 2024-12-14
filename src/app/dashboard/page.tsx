@@ -1,10 +1,14 @@
-"use-client";
+"use client";
+
 import MainTemplate from "../ui/component/module/main/MainTemplate";
 import CeremonyCard from "../ui/component/card/CeremonyCard";
 import Images from "@/constant/images";
 import NotesCard from "../ui/component/card/NotesCard";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-const data = [
+//Dummy Data
+export const defaultData = [
   {
     icon: Images.icTimestamp,
     title: "Timestamp",
@@ -35,6 +39,18 @@ const data = [
   },
 ];
 
+interface DashboardData {
+  icon: string;
+  title: string;
+  label: string;
+  status: string;
+  bgIcon: string;
+}
+
+interface NotesData {
+  notes: string;
+}
+
 const notesData = [
   {
     notes: `
@@ -46,6 +62,22 @@ const notesData = [
 ];
 
 export default function Dashboard() {
+  // const [defaultData] = useState<>
+  const [data, setData] = useState<DashboardData[]>([]);
+  const [notesData, setNotesData] = useState<NotesData[]>([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/api/dashboard")
+      .then((response) => {
+        setData(response.data);
+        setNotesData([]);
+      })
+      .catch((error) => {
+        console.error("Failed to fetch dashboard data:", error);
+      });
+  }, []);
+
   return (
     <MainTemplate>
       <div>
@@ -56,19 +88,36 @@ export default function Dashboard() {
       </div>
 
       <div className="flex flex-row space-x-6 overflow-x-scroll w-full no-scrollbar mt-4">
+        {data.length === 0 && (
+          <>
+            {defaultData.map((item, index) => (
+              <CeremonyCard
+                key={index}
+                icon={item.icon}
+                title={item.title}
+                label={item.label}
+                status={item.status}
+                bgIcon={item.bgIcon}
+              />
+            ))}
+          </>
+        )}
         {data.map((item, index) => (
           <CeremonyCard
             key={index}
-            icon={item.icon}
-            title={item.title}
-            label={item.label}
-            status={item.status}
+            icon={item.icon || ""}
+            title={item.title || "Judul"}
+            label={item.label || "Label"}
+            status={item.status || "Normal"}
             bgIcon={item.bgIcon}
           />
         ))}
+        {/* <CeremonyCard >
+
+        </CeremonyCard> */}
       </div>
       <div>
-        <NotesCard notes={notesData[0].notes}></NotesCard>
+        <NotesCard notes={notesData[0]?.notes || " "}></NotesCard>
       </div>
     </MainTemplate>
   );

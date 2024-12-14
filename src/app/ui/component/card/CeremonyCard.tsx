@@ -10,6 +10,33 @@ interface CeremonyCardProps {
   bgIcon: string;
 }
 
+const ceremonyCard = [
+  {
+    icon: Images.icTimestamp,
+    title: "Timestamp",
+    status: "Normal",
+    bgIcon: Images.icBgTimestamp,
+  },
+  {
+    icon: Images.icTemperatur,
+    title: "Temperatur",
+    status: "Normal",
+    bgIcon: Images.icBgTemperatur,
+  },
+  {
+    icon: Images.icKelembapan,
+    title: "Kelembapan",
+    status: "Normal",
+    bgIcon: Images.icBgKelembapan,
+  },
+  {
+    icon: Images.icPhTanah,
+    title: "PH Tanah",
+    status: "Normal",
+    bgIcon: Images.icBgPhTanah,
+  },
+];
+
 const CeremonyCard: React.FC<CeremonyCardProps> = ({
   icon,
   title,
@@ -18,12 +45,21 @@ const CeremonyCard: React.FC<CeremonyCardProps> = ({
   bgIcon,
 }) => {
   return (
+    // {data.map((item, index)) => (
+
+    // )}
     <div className="bg-white rounded-xl mx-auto my-4 hover:bg-yellow-50 hover:cursor-pointer flex-shrink-0 shadow-md">
       <div className="px-4 pt-4">
         {/* Header Section */}
         <div className="flex items-center justify-between mb-4">
           <div className="text-sm text-yellow-500 bg-yellow-100 p-4 rounded-3xl font-bold flex items-center">
-            <Image src={icon} alt="Icon" className="w-10 h-10" width={300} height={300} />
+            <Image
+              src={icon}
+              alt="Icon"
+              className="w-10 h-10"
+              width={300}
+              height={300}
+            />
           </div>
           <h4 className="text-xl font-semibold text-gray-700">{title}</h4>
         </div>
@@ -42,10 +78,18 @@ const CeremonyCard: React.FC<CeremonyCardProps> = ({
 
         {/* Grafik / Background Icon Section */}
         <div className="flex items-center justify-center mb-4">
-          <Image src={bgIcon} alt="Background Icon" className="w-15 h-15 object-contain" width={250} height={250} />
+          <Image
+            src={bgIcon}
+            alt="Background Icon"
+            className="w-15 h-15 object-contain"
+            width={250}
+            height={250}
+          />
         </div>
       </div>
     </div>
+    
+    
   );
 };
 

@@ -2,7 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { useReactTable, getCoreRowModel } from "@tanstack/react-table";
-import MainTemplate from "../ui/component/module/main/MainTemplate";  // Import MainTemplate
+import MainTemplate from "../ui/component/module/main/MainTemplate"; // Import MainTemplate
+import axios from "axios";
+import { error } from "console";
 
 const data = [
   {
@@ -79,21 +81,29 @@ const columns = [
 ];
 
 const Monitoring = () => {
+  const [tableData, setTableData] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/api/monitoring")
+      .then((response) => {
+        setTableData(response.data);
+      })
+      .catch((error) => {
+        console.error("Failed to fetch data:", error);
+      });
+  }, []);
+
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
 
-  // State to trigger re-renders if necessary
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true); // Ensures hydration only after the client is ready
-  }, []);
-
   return (
-    <MainTemplate>  {/* Wrap the content with MainTemplate for sidebar */}
+    <MainTemplate>
+      {" "}
+      {/* Wrap the content with MainTemplate for sidebar */}
       <div className="p-4">
         <h1 className="text-xl font-bold">Data Monitoring</h1>
         <p className="text-gray-500">Here is a list of all data entries</p>
