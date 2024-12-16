@@ -1,4 +1,3 @@
-import Images from "@/constant/images";
 import Image from "next/image";
 import React from "react";
 
@@ -10,33 +9,6 @@ interface CeremonyCardProps {
   bgIcon: string;
 }
 
-const ceremonyCard = [
-  {
-    icon: Images.icTimestamp,
-    title: "Timestamp",
-    status: "Normal",
-    bgIcon: Images.icBgTimestamp,
-  },
-  {
-    icon: Images.icTemperatur,
-    title: "Temperatur",
-    status: "Normal",
-    bgIcon: Images.icBgTemperatur,
-  },
-  {
-    icon: Images.icKelembapan,
-    title: "Kelembapan",
-    status: "Normal",
-    bgIcon: Images.icBgKelembapan,
-  },
-  {
-    icon: Images.icPhTanah,
-    title: "PH Tanah",
-    status: "Normal",
-    bgIcon: Images.icBgPhTanah,
-  },
-];
-
 const CeremonyCard: React.FC<CeremonyCardProps> = ({
   icon,
   title,
@@ -45,9 +17,6 @@ const CeremonyCard: React.FC<CeremonyCardProps> = ({
   bgIcon,
 }) => {
   return (
-    // {data.map((item, index)) => (
-
-    // )}
     <div className="bg-white rounded-xl mx-auto my-4 hover:bg-yellow-50 hover:cursor-pointer flex-shrink-0 shadow-md">
       <div className="px-4 pt-4">
         {/* Header Section */}

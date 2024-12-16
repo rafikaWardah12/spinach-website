@@ -16,6 +16,4 @@ model Data {
   phTanah String
   published Boolean @default(false)
   @@map("data")
-
 }
-

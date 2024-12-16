@@ -4,7 +4,7 @@ import MainTemplate from "../ui/component/module/main/MainTemplate";
 import CeremonyCard from "../ui/component/card/CeremonyCard";
 import Images from "@/constant/images";
 import NotesCard from "../ui/component/card/NotesCard";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import axios from "axios";
 
 //Dummy Data
@@ -31,6 +31,13 @@ export const defaultData = [
     bgIcon: Images.icBgKelembapan,
   },
   {
+    icon: Images.icIntensitasCahaya,
+    title: "Intensitas Cahaya",
+    label: "20 w",
+    status: "Normal",
+    bgIcon: Images.icBgIntensitasCahaya,
+  },
+  {
     icon: Images.icPhTanah,
     title: "PH Tanah",
     label: "7,6",
@@ -47,10 +54,6 @@ interface DashboardData {
   bgIcon: string;
 }
 
-interface NotesData {
-  notes: string;
-}
-
 const notesData = [
   {
     notes: `
@@ -62,21 +65,72 @@ const notesData = [
 ];
 
 export default function Dashboard() {
-  // const [defaultData] = useState<>
   const [data, setData] = useState<DashboardData[]>([]);
-  const [notesData, setNotesData] = useState<NotesData[]>([]);
 
   useEffect(() => {
     axios
       .get("http://localhost:3000/api/dashboard")
       .then((response) => {
-        setData(response.data);
-        setNotesData([]);
+        console.log(response.data);
+        //indexs Terakhir di API
+        const lastItem = response.data[response.data.length - 1] || {};
+
+        // Format timestamp
+        const formattedTimestamp = new Date(lastItem.timeStamp).toLocaleString(
+          "en-GB",
+          {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: true,
+          }
+        );
+
+        // Transform JSON ke dashboard
+        const transformedData: DashboardData[] = [
+          {
+            icon: Images.icTimestamp,
+            title: "Timestamp",
+            label: formattedTimestamp || "Timestamp not found",
+            status: "Normal",
+            bgIcon: Images.icBgTimestamp,
+          },
+          {
+            icon: Images.icTemperatur,
+            title: "Temperatur",
+            label: `${lastItem.suhu || "Temperatur not found"} C`,
+            status: "Normal",
+            bgIcon: Images.icBgTemperatur,
+          },
+          {
+            icon: Images.icKelembapan,
+            title: "Kelembapan",
+            label: `${lastItem.kelembapan || "Kelembapan not found"} mmHg`,
+            status: "Normal",
+            bgIcon: Images.icBgKelembapan,
+          },
+          {
+            icon: Images.icPhTanah,
+            title: "PH Tanah",
+            label: lastItem.phTanah || "PH Tanah not found",
+            status: "Normal",
+            bgIcon: Images.icBgPhTanah,
+          },
+        ];
+
+        setData(transformedData);
       })
       .catch((error) => {
         console.error("Failed to fetch dashboard data:", error);
       });
   }, []);
+
+  const memoData = useMemo(
+    () => (data.length > 0 ? data : defaultData),
+    [data]
+  );
 
   return (
     <MainTemplate>
@@ -88,33 +142,16 @@ export default function Dashboard() {
       </div>
 
       <div className="flex flex-row space-x-6 overflow-x-scroll w-full no-scrollbar mt-4">
-        {data.length === 0 && (
-          <>
-            {defaultData.map((item, index) => (
-              <CeremonyCard
-                key={index}
-                icon={item.icon}
-                title={item.title}
-                label={item.label}
-                status={item.status}
-                bgIcon={item.bgIcon}
-              />
-            ))}
-          </>
-        )}
-        {data.map((item, index) => (
+        {memoData.map((item, index) => (
           <CeremonyCard
             key={index}
-            icon={item.icon || ""}
-            title={item.title || "Judul"}
-            label={item.label || "Label"}
-            status={item.status || "Normal"}
+            icon={item.icon}
+            title={item.title}
+            label={item.label}
+            status={item.status}
             bgIcon={item.bgIcon}
           />
         ))}
-        {/* <CeremonyCard >
-
-        </CeremonyCard> */}
       </div>
       <div>
         <NotesCard notes={notesData[0]?.notes || " "}></NotesCard>

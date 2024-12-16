@@ -4,90 +4,104 @@ import { useState, useEffect } from "react";
 import { useReactTable, getCoreRowModel } from "@tanstack/react-table";
 import MainTemplate from "../ui/component/module/main/MainTemplate"; // Import MainTemplate
 import axios from "axios";
-import { error } from "console";
 
 const data = [
   {
     timestamp: "4/02/2024, 10.10P.M",
-    temperature: "40°C",
-    light: "20W",
-    humidity: "15%",
-    ph: "7,6",
+    suhu: "40°C",
+    kelembapan: "15%",
+    phTanah: "7,6",
   },
   {
     timestamp: "4/02/2024, 10.15P.M",
-    temperature: "35°C",
-    light: "30W",
-    humidity: "17%",
-    ph: "7,2",
+    suhu: "35°C",
+    kelembapan: "17%",
+    phTanah: "7,2",
   },
   {
     timestamp: "4/02/2024, 10.20P.M",
-    temperature: "28°C",
-    light: "30W",
-    humidity: "20%",
-    ph: "6,5",
+    suhu: "28°C",
+    kelembapan: "20%",
+    phTanah: "6,5",
   },
   {
     timestamp: "4/02/2024, 10.25P.M",
-    temperature: "25°C",
-    light: "15W",
-    humidity: "18%",
-    ph: "6,7",
+    suhu: "25°C",
+    kelembapan: "18%",
+    phTanah: "6,7",
   },
   {
     timestamp: "4/02/2024, 10.30P.M",
-    temperature: "27°C",
-    light: "15W",
-    humidity: "15%",
-    ph: "6,8",
+    suhu: "27°C",
+    kelembapan: "15%",
+    phTanah: "6,8",
   },
   {
     timestamp: "4/02/2024, 10.35P.M",
-    temperature: "23°C",
-    light: "10W",
-    humidity: "16%",
-    ph: "7,0",
+    suhu: "23°C",
+    kelembapan: "16%",
+    phTanah: "7,0",
   },
   {
     timestamp: "4/02/2024, 10.40P.M",
-    temperature: "30°C",
-    light: "30W",
-    humidity: "25%",
-    ph: "5,8",
+    suhu: "30°C",
+    kelembapan: "25%",
+    phTanah: "5,8",
   },
   {
     timestamp: "4/02/2024, 10.45P.M",
-    temperature: "31°C",
-    light: "25W",
-    humidity: "35%",
-    ph: "6,2",
+    suhu: "31°C",
+    kelembapan: "35%",
+    phTanah: "6,2",
   },
   {
     timestamp: "4/02/2024, 10.50P.M",
-    temperature: "32°C",
-    light: "30W",
-    humidity: "25%",
-    ph: "6,6",
+    suhu: "32°C",
+    kelembapan: "25%",
+    phTanah: "6,6",
   },
 ];
 
 const columns = [
   { accessorKey: "timestamp", header: "Timestamp" },
-  { accessorKey: "temperature", header: "Temperatur" },
-  { accessorKey: "light", header: "Intensitas Cahaya" },
-  { accessorKey: "humidity", header: "Humidity" },
-  { accessorKey: "ph", header: "PH Tanah" },
+  { accessorKey: "suhu", header: "Temperatur" },
+  { accessorKey: "kelembapan", header: "Kelembapan" },
+  { accessorKey: "phTanah", header: "PH Tanah" },
 ];
 
+interface MonitoringData {
+  timeStamp: string;
+  suhu: string;
+  kelembapan: string;
+  phTanah: string;
+}
+
 const Monitoring = () => {
-  const [tableData, setTableData] = useState([]);
+  const [tableData, setTableData] = useState<MonitoringData[]>([]);
 
   useEffect(() => {
     axios
       .get("http://localhost:3000/api/monitoring")
       .then((response) => {
+        console.log(response.data);
         setTableData(response.data);
+
+        // Format each timestamp in the response data
+        const formattedData = response.data.map((item: MonitoringData) => {
+          const formattedTimestamp = new Date(item.timeStamp).toLocaleString(
+            "en-GB",
+            {
+              day: "2-digit",
+              month: "2-digit",
+              year: "numeric",
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: true,
+            }
+          );
+          return { ...item, timestamp: formattedTimestamp };
+        });
+        setTableData(formattedData);
       })
       .catch((error) => {
         console.error("Failed to fetch data:", error);
@@ -95,7 +109,7 @@ const Monitoring = () => {
   }, []);
 
   const table = useReactTable({
-    data,
+    data: tableData,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
@@ -106,14 +120,14 @@ const Monitoring = () => {
       {/* Wrap the content with MainTemplate for sidebar */}
       <div className="p-4">
         <h1 className="text-xl font-bold">Data Monitoring</h1>
-        <p className="text-gray-500">Here is a list of all data entries</p>
+        <p className="text-gray-500">Inilah semua data monitoring</p>
         <div className="mt-4 overflow-x-auto">
           <table className="table-auto w-full border-collapse border border-gray-300">
             <thead className="bg-gray-100">
               {table.getHeaderGroups().map((headerGroup) => (
                 <tr key={headerGroup.id}>
                   <th className="border border-gray-300 px-4 py-2">
-                    <input type="checkbox" />
+                    <h2 className="text-start">No</h2>
                   </th>
                   {headerGroup.headers.map((header) => (
                     <th
@@ -131,10 +145,10 @@ const Monitoring = () => {
               ))}
             </thead>
             <tbody>
-              {table.getRowModel().rows.map((row) => (
+              {table.getRowModel().rows.map((row, index) => (
                 <tr key={row.id}>
                   <td className="border border-gray-300 px-4 py-2">
-                    <input type="checkbox" />
+                    {index + 1}
                   </td>
                   {row.getVisibleCells().map((cell) => (
                     <td
