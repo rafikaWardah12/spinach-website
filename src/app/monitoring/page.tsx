@@ -81,7 +81,7 @@ const Monitoring = () => {
 
   const getData = () => {
     axios
-      .get("http://localhost:3000/api/monitoring")
+      .get("/api/monitoring")
       .then((response) => {
         console.log(response.data);
         setTableData(response.data);
