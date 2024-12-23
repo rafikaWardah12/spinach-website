@@ -79,7 +79,7 @@ interface MonitoringData {
 const Monitoring = () => {
   const [tableData, setTableData] = useState<MonitoringData[]>([]);
 
-  useEffect(() => {
+  const getData = () => {
     axios
       .get("http://localhost:3000/api/monitoring")
       .then((response) => {
@@ -106,6 +106,12 @@ const Monitoring = () => {
       .catch((error) => {
         console.error("Failed to fetch data:", error);
       });
+  };
+  useEffect(() => {
+    getData();
+    setInterval(() => {
+      getData();
+    }, 5000);
   }, []);
 
   const table = useReactTable({

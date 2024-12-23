@@ -1,10 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import {
-  HomeIcon,
-  ChatBubbleLeftRightIcon,
-} from "@heroicons/react/24/outline";
+import { HomeIcon, ChatBubbleLeftRightIcon } from "@heroicons/react/24/outline";
 import { getInitials } from "@/utils";
 import Header from "./Header";
 import MobileBarDialog from "./MobileBarDialog";
@@ -20,7 +17,7 @@ const MainTemplate = ({ children }: MainTemplateProps) => {
   const navigation = [
     {
       name: "Dashboard",
-      href: `/dashboard`,
+      href: `/`,
       icon: HomeIcon,
       current: true,
     },
