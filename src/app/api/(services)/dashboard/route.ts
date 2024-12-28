@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 
 export async function GET(req: Request) {
   try {
-    const datas = await prisma.data.findMany({
+    const datas = await prisma.data.findFirst({
       where: { published: true },
       orderBy: { timeStamp: "desc" },
     });

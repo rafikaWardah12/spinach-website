@@ -14,7 +14,7 @@ interface HeaderProps {
 }
 
 const Header = ({ navigations, onClose, t }: HeaderProps) => {
-//   const { account } = useAuth();
+  //   const { account } = useAuth();
 
   return (
     <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
@@ -32,6 +32,12 @@ const Header = ({ navigations, onClose, t }: HeaderProps) => {
 
       <div className="flex flex-1 justify-end gap-x-4 self-stretch lg:gap-x-6">
         <div className="flex items-center gap-x-4 lg:gap-x-6">
+          <button
+            type="button"
+            className="px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          >
+            Activated Pump
+          </button>
           <button
             type="button"
             className="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500"
@@ -61,8 +67,7 @@ const Header = ({ navigations, onClose, t }: HeaderProps) => {
                 <span
                   aria-hidden="true"
                   className="ml-4 text-sm font-semibold leading-6 text-gray-900"
-                >
-                </span>
+                ></span>
                 <ChevronDownIcon
                   aria-hidden="true"
                   className="ml-2 h-5 w-5 text-gray-400"

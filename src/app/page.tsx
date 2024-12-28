@@ -65,21 +65,20 @@ const notesData = [
 ];
 
 const dummyFunc = () => {
-  // complicated proccess 
+  // complicated proccess
   return "hehe";
-}
+};
 
 export default function Dashboard() {
-  const [data, setData] = useState<DashboardData[]>([])
-  
+  const [data, setData] = useState<DashboardData[]>([]);
 
-  useEffect(() => {
+  const getData = () => {
     axios
       .get("/api/dashboard")
       .then((response) => {
         console.log(response.data);
         //indexs Terakhir di API
-        const lastItem = response.data[response.data.length - 1] || {};
+        const lastItem = response.data;
 
         // Format timestamp
         const formattedTimestamp = new Date(lastItem.timeStamp).toLocaleString(
@@ -131,6 +130,17 @@ export default function Dashboard() {
       .catch((error) => {
         console.error("Failed to fetch dashboard data:", error);
       });
+  };
+
+  useEffect(() => {
+    getData();
+    let interval = setInterval(() => {
+      getData();
+    }, 5000);
+
+    return () => {
+      clearInterval(interval);
+    };
   }, []);
 
   const memoData = useMemo(
@@ -161,6 +171,8 @@ export default function Dashboard() {
       </div>
       <div>
         <NotesCard notes={notesData[0]?.notes || " "}></NotesCard>
+      </div>
+      <div>
       </div>
     </MainTemplate>
   );
