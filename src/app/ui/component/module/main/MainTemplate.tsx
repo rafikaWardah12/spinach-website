@@ -1,11 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { HomeIcon, ChatBubbleLeftRightIcon } from "@heroicons/react/24/outline";
 import { getInitials } from "@/utils";
 import Header from "./Header";
 import MobileBarDialog from "./MobileBarDialog";
 import SideBar from "./Sidebar";
+import axios from "axios";
+import { log } from "console";
 
 interface MainTemplateProps {
   children: React.ReactNode;
@@ -13,6 +15,7 @@ interface MainTemplateProps {
 
 const MainTemplate = ({ children }: MainTemplateProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [onPump, setPump] = useState(false);
 
   const navigation = [
     {
@@ -39,6 +42,22 @@ const MainTemplate = ({ children }: MainTemplateProps) => {
   ];
   const userNavigation = [{ name: "Keluar", href: "#" }];
 
+  const getState = () => {
+    axios
+      .get("/api/checkActive")
+      .then((response) => {
+        setPump(response.data.active);
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error("Error fetching pump state:", error);
+      });
+  };
+
+  useEffect(() => {
+    getState();
+  }, [onPump]); // Memanggil saat `onPump` berubah
+
   return (
     <div className="h-screen flex">
       {/* Mobile mode */}
@@ -47,6 +66,7 @@ const MainTemplate = ({ children }: MainTemplateProps) => {
         navigations={navigation}
         onClose={setSidebarOpen}
         open={sidebarOpen}
+        onPump={setPump}
       />
 
       {/* Static sidebar for desktop */}
@@ -54,8 +74,12 @@ const MainTemplate = ({ children }: MainTemplateProps) => {
 
       {/* Main content area */}
       <div className="flex-1 flex flex-col bg-gray-50 lg:pl-72">
-        <Header navigations={userNavigation} onClose={setSidebarOpen} t={" "} />
-
+        <Header
+          navigations={userNavigation}
+          onClose={setSidebarOpen}
+          t={" "}
+          onPump={setPump}
+        />
         <main className="py-10">
           <div className="px-4 sm:px-6 lg:px-8">{children}</div>
         </main>

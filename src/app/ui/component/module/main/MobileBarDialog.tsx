@@ -19,6 +19,7 @@ interface MobileBarDialogProps {
   onClose: (value: boolean) => void;
   navigations: BasicNavigation[];
   navigationAdmin: BasicNavigation[];
+  onPump: (value: boolean) => void;
 }
 
 const MobileBarDialog = ({
@@ -26,6 +27,7 @@ const MobileBarDialog = ({
   onClose,
   open,
   navigationAdmin,
+  onPump,
 }: MobileBarDialogProps) => {
   const pathName = usePathname();
 

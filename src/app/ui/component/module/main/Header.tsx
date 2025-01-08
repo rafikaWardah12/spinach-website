@@ -2,19 +2,32 @@ import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { Bars3Icon, BellIcon } from "@heroicons/react/24/outline";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 // import { useAuth } from "@/hooks/auth/use_auth";
 import BasicNavigation from "@/interfaces/BasisNavigation";
 import Images from "@/constant/images";
+import axios from "axios";
 
 interface HeaderProps {
   onClose: (value: boolean) => void;
   t: any;
   navigations: BasicNavigation[];
+  onPump: (value: boolean) => void;
 }
 
-const Header = ({ navigations, onClose, t }: HeaderProps) => {
-  //   const { account } = useAuth();
+const Header = ({ navigations, onClose, t, onPump }: HeaderProps) => {
+  const [isPumpActive, setPumpActive] = useState(false);
+
+  const handlePumpActivation = async () => {
+    const newStatus = !isPumpActive;
+    try {
+      await axios.post("/api/checkActive", { isActive: newStatus });
+      setPumpActive(newStatus); 
+      onPump(newStatus);
+    } catch (err) {
+      console.error("Error updating pump status:", err);
+    }
+  };
 
   return (
     <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
@@ -34,9 +47,16 @@ const Header = ({ navigations, onClose, t }: HeaderProps) => {
         <div className="flex items-center gap-x-4 lg:gap-x-6">
           <button
             type="button"
-            className="px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            className={`px-3 py-2 text-xs font-medium rounded-lg ${
+              isPumpActive
+                ? "bg-gray-500 text-white"
+                : "bg-blue-700 text-white hover:bg-blue-800 focus:ring-4 focus:ring-blue-300"
+            }`}
+            // className="px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            onClick={handlePumpActivation}
+            disabled={isPumpActive}
           >
-            Activated Pump
+            {isPumpActive ? "Deactivate Pump" : "Activate Pump"}
           </button>
           <button
             type="button"
