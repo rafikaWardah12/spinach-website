@@ -42,22 +42,6 @@ const MainTemplate = ({ children }: MainTemplateProps) => {
   ];
   const userNavigation = [{ name: "Keluar", href: "#" }];
 
-  const getState = () => {
-    axios
-      .get("/api/checkActive")
-      .then((response) => {
-        setPump(response.data.active);
-        console.log(response);
-      })
-      .catch((error) => {
-        console.error("Error fetching pump state:", error);
-      });
-  };
-
-  useEffect(() => {
-    getState();
-  }, [onPump]); // Memanggil saat `onPump` berubah
-
   return (
     <div className="h-screen flex">
       {/* Mobile mode */}

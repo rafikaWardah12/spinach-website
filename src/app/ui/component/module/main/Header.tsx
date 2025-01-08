@@ -2,7 +2,7 @@ import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { Bars3Icon, BellIcon } from "@heroicons/react/24/outline";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import { useAuth } from "@/hooks/auth/use_auth";
 import BasicNavigation from "@/interfaces/BasisNavigation";
 import Images from "@/constant/images";
@@ -22,12 +22,25 @@ const Header = ({ navigations, onClose, t, onPump }: HeaderProps) => {
     const newStatus = !isPumpActive;
     try {
       await axios.post("/api/checkActive", { isActive: newStatus });
-      setPumpActive(newStatus); 
+      setPumpActive(newStatus);
       onPump(newStatus);
     } catch (err) {
       console.error("Error updating pump status:", err);
     }
   };
+
+  useEffect(() => {
+    const getStatus = async () => {
+      try {
+        const result = await axios.get("/api/checkActive");
+        setPumpActive(result.data.active);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    getStatus();
+  }, []);
 
   return (
     <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
@@ -54,7 +67,6 @@ const Header = ({ navigations, onClose, t, onPump }: HeaderProps) => {
             }`}
             // className="px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             onClick={handlePumpActivation}
-            disabled={isPumpActive}
           >
             {isPumpActive ? "Deactivate Pump" : "Activate Pump"}
           </button>
