@@ -66,7 +66,7 @@ const columns = [
   { accessorKey: "timestamp", header: "Timestamp" },
   { accessorKey: "suhu", header: "Temperatur" },
   { accessorKey: "kelembapan", header: "Kelembapan" },
-  { accessorKey: "phTanah", header: "PH Tanah" },
+  { accessorKey: "phTanah", header: "Kelembapan Tanah" },
 ];
 
 interface MonitoringData {

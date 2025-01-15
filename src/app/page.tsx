@@ -39,7 +39,7 @@ export const defaultData = [
   },
   {
     icon: Images.icPhTanah,
-    title: "PH Tanah",
+    title: "Kelambapan Tanah",
     label: "7,6",
     status: "Normal",
     bgIcon: Images.icBgPhTanah,
@@ -59,7 +59,7 @@ const notesData = [
     notes: `
   1. Bayam harus disiram setiap hari (kelembapan tanah < 50%)
   2. Pemantauan Suhu dan Kelembapan Udara (suhu 18–24°C dengan kelembapan udara antara 60–80%)
-  3. Pemupukan Otomatis (bayam idealnya tumbuh di tanah dengan pH 6-7)
+  3. Pemupukan Otomatis (bayam idealnya tumbuh di tanah dengan kelembapan tanah 40%-80%)
       `,
   },
 ];
@@ -118,7 +118,7 @@ export default function Dashboard() {
           },
           {
             icon: Images.icPhTanah,
-            title: "PH Tanah",
+            title: "Kelembapan Tanah",
             label: lastItem.phTanah || "PH Tanah not found",
             status: "Normal",
             bgIcon: Images.icBgPhTanah,
@@ -172,8 +172,7 @@ export default function Dashboard() {
       <div>
         <NotesCard notes={notesData[0]?.notes || " "}></NotesCard>
       </div>
-      <div>
-      </div>
+      <div></div>
     </MainTemplate>
   );
 }

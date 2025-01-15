@@ -39,11 +39,11 @@ const CeremonyCard: React.FC<CeremonyCardProps> = ({
         </div>
 
         {/* Status Section */}
-        <div className="flex justify-start mb-4">
+        {/* <div className="flex justify-start mb-4">
           <div className="bg-yellow-100 w-32 h-12 rounded-xl flex items-center pl-4">
             <p className="text-lg font-semibold text-gray-700">{status}</p>
           </div>
-        </div>
+        </div> */}
 
         {/* Grafik / Background Icon Section */}
         <div className="flex items-center justify-center mb-4">
