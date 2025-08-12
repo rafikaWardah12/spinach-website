@@ -4,7 +4,7 @@ This system utilizes a website and IoT devices to monitor soil pH, air temperatu
 ## Preview <a name="Preview"></a>
 <div style="display:flex;">
      <img alt="Preview" title="Preview" width="" src="images/1.jpg" />
-     <img alt="Preview" title="Preview" width="" src="1mages/2.jpg" />
+     <img alt="Preview" title="Preview" width="" src="images/2.jpg" />
 </div>
 
 ## Instalation
