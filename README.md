@@ -1,6 +1,12 @@
 # Spinach Website
 This system utilizes a website and IoT devices to monitor soil pH, air temperature, and soil moisture in real-time, while also allowing remote control to deactivate IoT when needed. It is built using Prisma as the ORM, Next.js for the web framework, and SQLite for lightweight and efficient data storage.
 
+## Preview <a name="Preview"></a>
+<div style="display:flex;">
+     <img alt="Preview" title="Preview" width="" src="images/1.jpg" />
+     <img alt="Preview" title="Preview" width="" src="1mages/2.jpg" />
+</div>
+
 ## Instalation
 Clone Repository
 ```sh
